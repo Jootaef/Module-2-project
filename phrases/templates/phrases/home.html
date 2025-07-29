@@ -1,0 +1,73 @@
+{% extends 'phrases/base.html' %}
+
+{% block title %}Motivational Phrase Generator{% endblock %}
+
+{% block content %}
+<h1>✨ Motivational Phrase Generator</h1>
+
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'phrases:about' %}" class="btn" style="background: linear-gradient(45deg, #28a745, #20c997);">📚 About the Project</a>
+</div>
+
+<div class="phrase-form">
+    <p style="margin-bottom: 20px; color: #666;">Select a category to get a motivational phrase:</p>
+    
+    <select id="categorySelect" class="category-select">
+        <option value="">-- Select a category --</option>
+        {% for value, label in categories %}
+            <option value="{{ value }}">{{ label }}</option>
+        {% endfor %}
+    </select>
+    
+    <br>
+    <button onclick="getPhrase()" class="btn">🎯 Get Phrase</button>
+</div>
+
+<div class="loading">Loading motivational phrase...</div>
+
+<div id="phraseDisplay" class="phrase-display" style="display: none;">
+    <div class="phrase-text" id="phraseText"></div>
+    <div class="phrase-author" id="phraseAuthor"></div>
+</div>
+
+<script>
+function getPhrase() {
+    const category = document.getElementById('categorySelect').value;
+    
+    if (!category) {
+        alert('Please select a category');
+        return;
+    }
+    
+    showLoading();
+    document.getElementById('phraseDisplay').style.display = 'none';
+    
+    // Create form to send data
+    const formData = new FormData();
+    formData.append('category', category);
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+    
+    fetch('{% url "phrases:get_phrase" %}', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        hideLoading();
+        
+        if (data.success) {
+            document.getElementById('phraseText').textContent = data.phrase;
+            document.getElementById('phraseAuthor').textContent = `— ${data.author}`;
+            document.getElementById('phraseDisplay').style.display = 'block';
+        } else {
+            alert(data.message || 'Error getting phrase');
+        }
+    })
+    .catch(error => {
+        hideLoading();
+        console.error('Error:', error);
+        alert('Error connecting to server');
+    });
+}
+</script>
+{% endblock %} 

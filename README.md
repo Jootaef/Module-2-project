@@ -156,7 +156,6 @@ motivational_phrases/
 ## 🚀 Useful Commands
 
 ```bash
-# Create superuser (optional)
 python manage.py createsuperuser
 
 # Access Django shell
