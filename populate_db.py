@@ -1,149 +1,127 @@
 #!/usr/bin/env python
+"""
+Script to populate the database with sample data for the Portfolio Website.
+"""
+
 import os
+import sys
 import django
 
-# Configure Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'motivational_phrases.settings')
+# Setup Django environment
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.settings')
 django.setup()
 
-from phrases.models import MotivationalPhrase
+from main.models import Project, Contact
 
-def populate_database():
-    """Populate the database with sample motivational phrases"""
-    
-    phrases_data = [
-        # Work
+def create_sample_projects():
+    """Create sample projects for the portfolio"""
+    projects_data = [
         {
-            'category': 'work',
-            'text': 'Success is not final, failure is not fatal: it is the courage to continue that counts.',
-            'author': 'Winston Churchill'
+            'title': 'E-Commerce Platform',
+            'description': 'A full-featured e-commerce platform built with Django and React. Features include user authentication, product management, shopping cart, and payment integration with Stripe.',
+            'technologies': 'Django, React, PostgreSQL, Stripe, Bootstrap',
+            'github_url': 'https://github.com/jaydan/ecommerce-platform',
+            'live_url': 'https://ecommerce-demo.com',
+            'image': 'https://via.placeholder.com/400x200/3498db/ffffff?text=E-Commerce'
         },
         {
-            'category': 'work',
-            'text': 'Quality remains long after the price is forgotten.',
-            'author': 'Aldo Gucci'
+            'title': 'Task Management App',
+            'description': 'A cross-platform mobile application for task management with real-time synchronization, team collaboration, and progress tracking features.',
+            'technologies': 'React Native, Firebase, Redux, Node.js',
+            'github_url': 'https://github.com/jaydan/task-manager',
+            'live_url': 'https://task-manager-app.com',
+            'image': 'https://via.placeholder.com/400x200/e74c3c/ffffff?text=Task+Manager'
         },
         {
-            'category': 'work',
-            'text': 'Hard work beats talent when talent doesn\'t work hard.',
-            'author': 'Tim Notke'
+            'title': 'Data Analytics Dashboard',
+            'description': 'An interactive dashboard for data visualization and analytics. Features include real-time data processing, customizable charts, and export functionality.',
+            'technologies': 'Python, D3.js, Flask, MongoDB',
+            'github_url': 'https://github.com/jaydan/analytics-dashboard',
+            'live_url': 'https://analytics-demo.com',
+            'image': 'https://via.placeholder.com/400x200/2ecc71/ffffff?text=Analytics'
         },
         {
-            'category': 'work',
-            'text': 'Innovation distinguishes between a leader and a follower.',
-            'author': 'Steve Jobs'
-        },
-        
-        # Study
-        {
-            'category': 'study',
-            'text': 'Education is the most powerful weapon which you can use to change the world.',
-            'author': 'Nelson Mandela'
+            'title': 'AI Chatbot',
+            'description': 'An intelligent chatbot powered by machine learning for customer support. Features natural language processing and integration with multiple platforms.',
+            'technologies': 'Python, TensorFlow, NLP, API',
+            'github_url': 'https://github.com/jaydan/ai-chatbot',
+            'live_url': 'https://chatbot-demo.com',
+            'image': 'https://via.placeholder.com/400x200/9b59b6/ffffff?text=AI+Chatbot'
         },
         {
-            'category': 'study',
-            'text': 'Knowledge is power. Information is liberating.',
-            'author': 'Kofi Annan'
-        },
-        {
-            'category': 'study',
-            'text': 'Learning never exhausts the mind.',
-            'author': 'Leonardo da Vinci'
-        },
-        {
-            'category': 'study',
-            'text': 'The mind is not a vessel to be filled, but a fire to be kindled.',
-            'author': 'Plutarch'
-        },
-        
-        # Love
-        {
-            'category': 'love',
-            'text': 'Love is not something you look at, it is something you feel. And even more, it is something you demonstrate.',
-            'author': 'Paulo Coelho'
-        },
-        {
-            'category': 'love',
-            'text': 'Love is patient, love is kind.',
-            'author': 'Bible'
-        },
-        {
-            'category': 'love',
-            'text': 'Love does not consist in gazing at each other, but in looking outward together in the same direction.',
-            'author': 'Antoine de Saint-Exupéry'
-        },
-        {
-            'category': 'love',
-            'text': 'Love is the poetry of the senses.',
-            'author': 'Honoré de Balzac'
-        },
-        
-        # Sports
-        {
-            'category': 'sports',
-            'text': 'Sports do not build character. They reveal it.',
-            'author': 'Heywood Broun'
-        },
-        {
-            'category': 'sports',
-            'text': 'Champions aren\'t made in gyms. Champions are made from something they have deep inside them.',
-            'author': 'Muhammad Ali'
-        },
-        {
-            'category': 'sports',
-            'text': 'Pain is temporary. It may last a minute, or an hour, or a day, or a year, but eventually it will subside.',
-            'author': 'Lance Armstrong'
-        },
-        {
-            'category': 'sports',
-            'text': 'The difference between the impossible and the possible lies in determination.',
-            'author': 'Tommy Lasorda'
-        },
-        
-        # Life
-        {
-            'category': 'life',
-            'text': 'Life is what happens while you\'re busy making other plans.',
-            'author': 'John Lennon'
-        },
-        {
-            'category': 'life',
-            'text': 'Don\'t count the days, make the days count.',
-            'author': 'Muhammad Ali'
-        },
-        {
-            'category': 'life',
-            'text': 'Life is either a daring adventure or nothing at all.',
-            'author': 'Helen Keller'
-        },
-        {
-            'category': 'life',
-            'text': 'The purpose of life is to live it, to taste experience to the utmost.',
-            'author': 'Eleanor Roosevelt'
-        },
-        {
-            'category': 'life',
-            'text': 'Happiness is not something you postpone for the future; it is something you design for the present.',
-            'author': 'Jim Rohn'
+            'title': 'Portfolio Website',
+            'description': 'A modern, responsive portfolio website built with Django and Bootstrap. Features dynamic content management and contact form functionality.',
+            'technologies': 'Django, Bootstrap, SQLite, JavaScript',
+            'github_url': 'https://github.com/jaydan/portfolio-website',
+            'live_url': 'https://jaydan-portfolio.com',
+            'image': 'https://via.placeholder.com/400x200/f39c12/ffffff?text=Portfolio'
         }
     ]
     
-    # Create phrases in the database
-    for phrase_data in phrases_data:
-        MotivationalPhrase.objects.get_or_create(
-            text=phrase_data['text'],
-            category=phrase_data['category'],
-            defaults={
-                'author': phrase_data['author']
-            }
+    for project_data in projects_data:
+        project, created = Project.objects.get_or_create(
+            title=project_data['title'],
+            defaults=project_data
         )
+        if created:
+            print(f"✅ Created project: {project.title}")
+        else:
+            print(f"⏭️  Project already exists: {project.title}")
+
+def create_sample_contacts():
+    """Create sample contact messages"""
+    contacts_data = [
+        {
+            'name': 'John Smith',
+            'email': 'john.smith@company.com',
+            'message': 'Hi Jaydan, I was impressed by your portfolio and would like to discuss a potential project. We need a web application for our startup and your skills seem perfect for the job.'
+        },
+        {
+            'name': 'Sarah Johnson',
+            'email': 'sarah.johnson@techcorp.com',
+            'message': 'Hello! I saw your e-commerce project and it looks exactly like what we need. Can we schedule a call to discuss the requirements and timeline?'
+        },
+        {
+            'name': 'Mike Davis',
+            'email': 'mike.davis@startup.io',
+            'message': 'Great work on the AI chatbot! We\'re looking for someone with ML experience for our customer service automation project. Are you available for freelance work?'
+        }
+    ]
     
-    print(f"✅ Database populated with {len(phrases_data)} motivational phrases")
-    print("📊 Phrases by category:")
+    for contact_data in contacts_data:
+        contact, created = Contact.objects.get_or_create(
+            name=contact_data['name'],
+            email=contact_data['email'],
+            defaults=contact_data
+        )
+        if created:
+            print(f"✅ Created contact: {contact.name}")
+        else:
+            print(f"⏭️  Contact already exists: {contact.name}")
+
+def main():
+    """Main function to populate the database"""
+    print("🚀 Starting database population...")
+    print("=" * 50)
     
-    for category_code, category_name in MotivationalPhrase.CATEGORY_CHOICES:
-        count = MotivationalPhrase.objects.filter(category=category_code).count()
-        print(f"   - {category_name}: {count} phrases")
+    try:
+        # Create sample projects
+        print("\n📁 Creating sample projects...")
+        create_sample_projects()
+        
+        # Create sample contacts
+        print("\n📧 Creating sample contacts...")
+        create_sample_contacts()
+        
+        print("\n" + "=" * 50)
+        print("✅ Database population completed successfully!")
+        print(f"📊 Created {Project.objects.count()} projects and {Contact.objects.count()} contacts")
+        print("\n🎉 Your portfolio website is ready to use!")
+        print("💡 Run 'python manage.py runserver' to start the development server")
+        
+    except Exception as e:
+        print(f"❌ Error populating database: {e}")
+        sys.exit(1)
 
 if __name__ == '__main__':
-    populate_database() 
+    main() 

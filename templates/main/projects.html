@@ -1,0 +1,184 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">
+                    <i class="fas fa-project-diagram me-3 text-primary"></i>My Projects
+                </h1>
+                <p class="lead">Here are some of the projects I've worked on. Each project represents a unique challenge and learning experience.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="py-5">
+    <div class="container">
+        {% if projects %}
+            <div class="row">
+                {% for project in projects %}
+                <div class="col-lg-6 mb-4">
+                                         <div class="card h-100">
+                         <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text">{{ project.description }}</p>
+                            <div class="mb-3">
+                                <span class="skill-badge">Django</span>
+                                <span class="skill-badge">Python</span>
+                                <span class="skill-badge">Bootstrap</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <div class="d-flex gap-2">
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                                    <i class="fab fa-github me-1"></i>GitHub
+                                </a>
+                                {% endif %}
+                                {% if project.live_url %}
+                                <a href="{{ project.live_url }}" class="btn btn-primary btn-sm" target="_blank">
+                                    <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Sample Projects (when no projects in database) -->
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-shopping-cart fa-3x text-muted"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">E-Commerce Platform</h5>
+                            <p class="card-text">A full-featured e-commerce platform built with Django and React. Features include user authentication, product management, shopping cart, and payment integration.</p>
+                            <div class="mb-3">
+                                <span class="skill-badge">Django</span>
+                                <span class="skill-badge">React</span>
+                                <span class="skill-badge">PostgreSQL</span>
+                                <span class="skill-badge">Stripe</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-github me-1"></i>GitHub
+                                </a>
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-mobile-alt fa-3x text-muted"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Task Management App</h5>
+                            <p class="card-text">A cross-platform mobile application for task management with real-time synchronization, team collaboration, and progress tracking features.</p>
+                            <div class="mb-3">
+                                <span class="skill-badge">React Native</span>
+                                <span class="skill-badge">Firebase</span>
+                                <span class="skill-badge">Redux</span>
+                                <span class="skill-badge">Node.js</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-github me-1"></i>GitHub
+                                </a>
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-chart-line fa-3x text-muted"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Data Analytics Dashboard</h5>
+                            <p class="card-text">An interactive dashboard for data visualization and analytics. Features include real-time data processing, customizable charts, and export functionality.</p>
+                            <div class="mb-3">
+                                <span class="skill-badge">Python</span>
+                                <span class="skill-badge">D3.js</span>
+                                <span class="skill-badge">Flask</span>
+                                <span class="skill-badge">MongoDB</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-github me-1"></i>GitHub
+                                </a>
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-robot fa-3x text-muted"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">AI Chatbot</h5>
+                            <p class="card-text">An intelligent chatbot powered by machine learning for customer support. Features natural language processing and integration with multiple platforms.</p>
+                            <div class="mb-3">
+                                <span class="skill-badge">Python</span>
+                                <span class="skill-badge">TensorFlow</span>
+                                <span class="skill-badge">NLP</span>
+                                <span class="skill-badge">API</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-github me-1"></i>GitHub
+                                </a>
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <h3 class="mb-4">Interested in Working Together?</h3>
+        <p class="lead mb-4">I'm always open to new opportunities and exciting projects!</p>
+        <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-paper-plane me-2"></i>Let's Talk
+        </a>
+    </div>
+</section>
+{% endblock %} 
